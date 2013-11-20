@@ -164,7 +164,7 @@ namespace Hangman.Web.Controllers
 
         public ActionResult GameOver()
         {
-            return PartialView("_GameOver");
+            return PartialView("_GameOver", SecretWord.FullWord);
         }
 
         public ActionResult DisplayTopPlayers()
