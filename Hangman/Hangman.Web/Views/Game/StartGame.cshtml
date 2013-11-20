@@ -1,0 +1,28 @@
+﻿@model System.Char[]
+
+
+
+
+<div id="secretWord">
+    @Html.Partial("_SecretWord", Model)
+</div>
+
+<div id="form-wrapper">
+    @using (Ajax.BeginForm("GuessTheLetter", null, new AjaxOptions
+    {
+        HttpMethod = "Get",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "secretWord"
+    }, new { id = "form" }))
+    {
+        <input type="text" name="letter" class="span12 search-query " />
+        <input type="submit" class="btn btn-primary btn-lg" />
+    }
+</div>
+
+<div>
+    @Html.Action("DisplayTopPlayers")
+</div>
+
+
+<canvas id="canvasElement" width="500" height="500"></canvas>

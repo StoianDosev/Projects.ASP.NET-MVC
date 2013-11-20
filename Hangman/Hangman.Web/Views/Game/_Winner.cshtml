@@ -1,0 +1,27 @@
+﻿@model System.Char[]
+
+<h2>Winner</h2>
+<div id="gameover">
+
+    <span>
+        The country is: 
+    </span>
+
+    @{
+        if (Model != null)
+        {
+            for (int i = 0; i < Model.Length; i++)
+            {
+                <span>@Model[i]</span>
+            }
+        }
+    }
+</div>
+
+<br />
+@Html.ActionLink("Start new game", "StartGame")
+
+<script>
+    $("#form-wrapper").hide();
+</script>
+
