@@ -1,25 +1,26 @@
 ﻿@model System.Char[]
 
 <h2>Winner</h2>
-<div id="winner" class="">
+<div id="winner" class="alert alert-success">
 
     <span>
-        The country is: 
+        The country is:
     </span>
 
-        @{
-    if (Model != null)
-    {
-        for (int i = 0; i < Model.Length; i++)
+    @{
+        if (Model != null)
         {
-            <strong class="lead">@Model[i]</strong>
+            for (int i = 0; i < Model.Length; i++)
+            {
+                <strong class="lead">@Model[i]</strong>
+            }
         }
     }
-}
 </div>
 
-<br />
-@Html.ActionLink("Start new game", "StartGame")
+<div class="alert alert-dismissable" id="gameover">
+    @Html.ActionLink("Start new game", "StartGame")
+</div>
 
 <script>
     $("#form-wrapper").hide();

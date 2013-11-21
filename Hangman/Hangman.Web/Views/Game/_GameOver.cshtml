@@ -1,7 +1,7 @@
 ﻿@model System.Char[]
 
 <h2>Game Over</h2>
-<div id="gameover">
+<div class="well" id="gameover">
 
     <span>
         The country is:
@@ -12,13 +12,13 @@
         {
             for (int i = 0; i < Model.Length; i++)
             {
-                <strong class="lead">@Model[i]</strong>
+                <strong>@Model[i]</strong>
             }
         }
     }
 </div>
 
-<div id="gameover">
+<div class="alert alert-dismissable" id="gameover">
     @Html.ActionLink("Start new game", "StartGame")
 </div>
 
