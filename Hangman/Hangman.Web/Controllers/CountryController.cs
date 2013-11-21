@@ -90,6 +90,7 @@ namespace Hangman.Web.Controllers
             if (ModelState.IsValid)
             {
                 this.Data.Countries.Update(country);
+                this.Data.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(country);
