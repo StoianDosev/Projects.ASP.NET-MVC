@@ -1,25 +1,33 @@
 ﻿@model System.Char[]
 
 
-<div>
-    @Html.Action("DisplayTopPlayers")
-</div>
+<div class="row">
 
-<div id="secretWord">
-    @Html.Partial("_SecretWord", Model)
-</div>
+    <div class="col-md-6">
+        <div id="secretWord">
+            @Html.Partial("_SecretWord", Model)
+        </div>
 
-<div id="form-wrapper">
-    @using (Ajax.BeginForm("GuessTheLetter", null, new AjaxOptions
+        <div id="form-wrapper" class="col-md-6">
+            @using (Ajax.BeginForm("GuessTheLetter", null, new AjaxOptions
     {
         HttpMethod = "Get",
         InsertionMode = InsertionMode.Replace,
         UpdateTargetId = "secretWord"
     }, new { id = "form" }))
-    {
-        <input type="text" name="letter" class="span12 search-query " />
-        <input type="submit" class="btn btn-primary btn-lg" />
-    }
-</div>
+            {
+                <input type="text" name="letter" class="span12 search-query " />
+                <input type="submit" class="btn btn-primary btn-lg" />
+            }
+        </div>
 
-<canvas id="canvasElement" width="500" height="500"></canvas>
+        <div class="col-md-6">
+            @Html.Action("DisplayTopPlayers")
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <canvas id="canvasElement" width="500" height="500"></canvas>
+    </div>
+
+</div>
