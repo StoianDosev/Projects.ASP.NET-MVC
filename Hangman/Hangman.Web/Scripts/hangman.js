@@ -1,4 +1,6 @@
 ﻿
+
+
 var canvas = document.getElementById("canvasElement");
 var context = canvas.getContext("2d");
 
@@ -84,3 +86,5 @@ function drawMouth() {
     context.arc(250, 140, 5, 0, 2 * Math.PI, false);
     context.stroke();
 }
+
+
