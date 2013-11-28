@@ -1,5 +1,30 @@
 ﻿
+var getPage = function () {
+    var a = $(this)
 
+    var options = {
+        url: a.attr("href"),
+        type: "get",
+        contentType: "application/json"
+    };
+
+    if (a.attr("href") == "" || a.attr("href") == undefined || a.attr("href") == null) {
+        return false;
+    }
+
+
+    $.ajax(options).done(function (data) {
+
+        console.log(data)
+
+        var target = $("#players")
+        $(target).replaceWith(data);
+
+
+    })
+    return false; 
+}
+$(".container").on("click", ".pagedListNew a", getPage);
 
 var canvas = document.getElementById("canvasElement");
 var context = canvas.getContext("2d");

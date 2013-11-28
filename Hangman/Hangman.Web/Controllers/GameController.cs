@@ -191,5 +191,32 @@ namespace Hangman.Web.Controllers
 
             return PartialView("_DisplayTopPlayers", topPlayers.ToList());
         }
+
+        [HttpGet]
+        public ActionResult DisplayAllPlayers(int page = 1)
+        {
+            var users = this.userManager.GetAllUsers();
+
+            List<PlayersModel> userList = new List<PlayersModel>();
+
+            foreach (var item in users)
+            {
+                var adminRole = item.Roles.Where(x => x.Role.Name == "admin").FirstOrDefault();
+                if (adminRole == null)
+                {
+                    userList.Add(new PlayersModel()
+                    {
+                        Name = item.UserName,
+                        Score = item.Score,
+                    });
+                }
+            }
+
+            IPagedList<PlayersModel> list = userList.OrderByDescending(x => x.Score).ToPagedList(page, 5);
+
+
+            return PartialView("_AllPlayers", list);
+
+        }
     }
 }

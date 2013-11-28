@@ -1,0 +1,61 @@
+﻿@model IPagedList<Hangman.Web.Models.PlayersModel>
+
+<div id="players">
+
+    <div class="pagedListNew" data-target="#players">
+        @Html.PagedListPager(Model, page => Url.Action("DisplayAllPlayers", new { page }),
+    PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+
+
+
+    <table class="table table-condensed table-bordered">
+        <tr>
+            <th class="alert alert-info">
+                Index
+            </th>
+            <th class="alert alert-info">
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+            </th>
+            <th class="alert alert-info">
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Score)
+            </th>
+        </tr>
+        @{
+            int count = 0;
+
+            foreach (var item in Model)
+            {
+                <tr>
+                    @{
+                if (User.Identity.Name == item.Name)
+                {
+                    <td class="alert alert-danger">
+                        @(count += 1)
+                    </td>
+                        <td class="alert alert-danger">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td class="alert alert-danger">
+                            @Html.DisplayFor(modelItem => item.Score)
+                        </td>
+                }
+                else
+                {
+                    <td>
+                        @(count += 1)
+                    </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Score)
+                        </td>
+                }
+                    }
+                </tr>
+            }
+        }
+    </table>
+</div>
+

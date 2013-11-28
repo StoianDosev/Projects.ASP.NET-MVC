@@ -251,6 +251,7 @@
     <Content Include="Views\Game\_Winner.cshtml" />
     <Content Include="Views\Game\_GameOver.cshtml" />
     <Content Include="Views\Game\_DisplayTopPlayers.cshtml" />
+    <Content Include="Views\Game\_AllPlayers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

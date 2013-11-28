@@ -4,33 +4,71 @@
     <div class="panel-heading h4">The Hangman</div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-6">
-                <div id="secretWord">
-                    @Html.Partial("_SecretWord", Model)
+            <div class="col-md-5">
+                <div class="row">
+                    <div id="secretWord">
+                        @Html.Partial("_SecretWord", Model)
+                    </div>
                 </div>
-                <div id="form-wrapper" class="col-md-6">
-                    @using (Ajax.BeginForm("GuessTheLetter", null, new AjaxOptions
+                <div class="row">
+                    <div id="form-wrapper" class="col-md-8">
+                        @using (Ajax.BeginForm("GuessTheLetter", null, new AjaxOptions
                     {
                         HttpMethod = "Get",
                         InsertionMode = InsertionMode.Replace,
                         UpdateTargetId = "secretWord"
                     }, new { id = "form" }))
-                    {
-                        <div class="input-group">
-                            <input type="text" name="letter" class="form-control" />
-                            <span class="input-group-btn">
-                                <input type="submit" class="btn btn-primary" value="Check" />
-                            </span>
-                        </div>
-                    }
+                        {
+                            <div class="input-group">
+                                <input type="text" name="letter" class="form-control" />
+                                <span class="input-group-btn">
+                                    <input type="submit" class="btn btn-primary" value="Check" />
+                                </span>
+                            </div>
+                        }
+                    </div>
                 </div>
+                
             </div>
             <div class="col-md-4">
                 <canvas id="canvasElement" width="500" height="500"></canvas>
             </div>
-            <div class="col-md-2">
-                @Html.Action("DisplayTopPlayers")
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Top 5 players
+                    </div>
+                    <div class="panel-body">
+                        @Html.Action("DisplayTopPlayers")
+                    </div>
+                </div>
+                <button id="showModal" class="btn btn-danger">Show</button> 
+            </div>
+        </div>
+        
+        <div id="theModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4>All palyers</h4>
+                    </div>
+                    <div class="modal-body">
+                        @Html.Action("DisplayAllPlayers")
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@section scripts{
+    <script>
+        function show() {
+            $("#theModal").modal("show");
+        }
+        $("#showModal").click(show)
+    </script>
+}
