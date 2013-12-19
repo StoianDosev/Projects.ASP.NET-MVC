@@ -1,4 +1,5 @@
-﻿@model System.Char[]
+﻿@*@model System.Char[]*@
+@model Hangman.Web.Models.GameModel
 
 <div class="panel panel-default">
     <div class="panel-heading h4">The Hangman</div>
@@ -13,14 +14,15 @@
                 <div class="row">
                     <div id="form-wrapper" class="col-md-8">
                         @using (Ajax.BeginForm("GuessTheLetter", null, new AjaxOptions
-                    {
-                        HttpMethod = "Get",
-                        InsertionMode = InsertionMode.Replace,
-                        UpdateTargetId = "secretWord"
-                    }, new { id = "form" }))
+                        {
+                            HttpMethod = "Get",
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "secretWord",
+                            OnSuccess= "clearTextBox"
+                        }, new { id = "form" }))
                         {
                             <div class="input-group">
-                                <input type="text" name="letter" class="form-control" />
+                                <input type="text" name="letter" class="form-control" id="letter" />
                                 <span class="input-group-btn">
                                     <input type="submit" class="btn btn-primary" value="Check" />
                                 </span>
@@ -66,9 +68,16 @@
 </div>
 @section scripts{
     <script>
+        function clearTextBox() {
+            var inputTextElement = document.getElementById("letter");
+            inputTextElement.value = "";
+            //$("#letter").val("");
+        }
+
         function show() {
             $("#theModal").modal("show");
         }
-        $("#showModal").click(show)
+
+        $("#showModal").click(show)        
     </script>
 }

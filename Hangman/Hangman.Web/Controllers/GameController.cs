@@ -21,27 +21,36 @@ namespace Hangman.Web.Controllers
 
         private static int guesses;
 
+        private IList<PlayersModel> userList;
+
         public GameController(IUowData data)
         {
             this.Data = data;
+            this.userList = GetAllPlayers();
         }
 
+        [HttpGet]
         public ActionResult StartGame()
         {
+           
             SecretWord.UsedLetters = new char[] { 'a', 'b','c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
                 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
             guesses = 5;
 
-            ViewBag.UsedLetters = SecretWord.UsedLetters;
-
-            ViewBag.Guesses = guesses;
-
             var country = this.GenerateRandumCountry();
 
             SecretWord.FullWord = this.ConvertCountryNameToArray(country);
 
-            return View(SecretWord.PartialWord);
+            GameModel model = new GameModel()
+            {
+                FullWord = SecretWord.FullWord,
+                Guesses = guesses,
+                PartialWord = SecretWord.PartialWord,
+                UsedLetters = SecretWord.UsedLetters,
+            };
+
+            return View(model);
         }
 
         private Country GenerateRandumCountry()
@@ -72,18 +81,22 @@ namespace Hangman.Web.Controllers
         [HttpGet]
         public ActionResult GuessTheLetter(string letter)
         {
+            GameModel model = new GameModel
+            {
+                Guesses = guesses,
+                FullWord = SecretWord.FullWord,
+                UsedLetters = SecretWord.UsedLetters,
+                PartialWord = SecretWord.PartialWord,
+            };
+
             if (string.IsNullOrEmpty(letter) && guesses > 0)
             {
-                ViewBag.Guesses = guesses;
-                ViewBag.UsedLetters = SecretWord.UsedLetters;
-                return PartialView("_SecretWord", SecretWord.PartialWord);
+                return PartialView("_SecretWord", model);
             }
 
             SearchForLetter(letter);
 
-            ViewBag.UsedLetters = SecretWord.UsedLetters;
-
-            ViewBag.Guesses = guesses;
+            model.Guesses = guesses;
 
             if (guesses == 0)
             {
@@ -95,7 +108,7 @@ namespace Hangman.Web.Controllers
             }
             else
             {
-                return PartialView("_SecretWord", SecretWord.PartialWord);
+                return PartialView("_SecretWord", model);
             }
         }
 
@@ -165,10 +178,11 @@ namespace Hangman.Web.Controllers
 
         public ActionResult GameOver()
         {
+
             return PartialView("_GameOver", SecretWord.FullWord);
         }
 
-        public ActionResult DisplayTopPlayers()
+        private List<PlayersModel> GetAllPlayers()
         {
             var users = this.userManager.GetAllUsers();
 
@@ -186,34 +200,22 @@ namespace Hangman.Web.Controllers
                     });
                 }
             }
+            return userList;
+        }
 
-            var topPlayers = userList.OrderByDescending(x => x.Score).Take(5);
+        [HttpGet]
+        public ActionResult DisplayTopPlayers()
+        {
+            var topPlayers = this.userList.OrderByDescending(x => x.Score).Take(5).ToList();
 
-            return PartialView("_DisplayTopPlayers", topPlayers.ToList());
+            return PartialView("_DisplayTopPlayers", topPlayers);
         }
 
         [HttpGet]
         public ActionResult DisplayAllPlayers(int page = 1)
         {
-            var users = this.userManager.GetAllUsers();
-
-            List<PlayersModel> userList = new List<PlayersModel>();
-
-            foreach (var item in users)
-            {
-                var adminRole = item.Roles.Where(x => x.Role.Name == "admin").FirstOrDefault();
-                if (adminRole == null)
-                {
-                    userList.Add(new PlayersModel()
-                    {
-                        Name = item.UserName,
-                        Score = item.Score,
-                    });
-                }
-            }
-
-            IPagedList<PlayersModel> list = userList.OrderByDescending(x => x.Score).ToPagedList(page, 5);
-
+            
+            IPagedList<PlayersModel> list = this.userList.OrderByDescending(x => x.Score).ToPagedList(page, 5);
 
             return PartialView("_AllPlayers", list);
 

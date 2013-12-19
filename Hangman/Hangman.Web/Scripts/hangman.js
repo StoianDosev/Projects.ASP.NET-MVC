@@ -1,4 +1,4 @@
-﻿
+﻿//async paging
 var getPage = function () {
     var a = $(this)
 
@@ -26,10 +26,9 @@ var getPage = function () {
 }
 $(".container").on("click", ".pagedListNew a", getPage);
 
+
 var canvas = document.getElementById("canvasElement");
 var context = canvas.getContext("2d");
-
-
 
 (function fun() {
 

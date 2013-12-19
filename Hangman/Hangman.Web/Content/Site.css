@@ -43,4 +43,5 @@ input[type="checkbox"].input-validation-error {
 
 #secretWord {
     padding-left:15px;
+    padding-right:15px;
 }
