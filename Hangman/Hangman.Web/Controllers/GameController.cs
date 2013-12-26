@@ -32,9 +32,9 @@ namespace Hangman.Web.Controllers
         [HttpGet]
         public ActionResult StartGame()
         {
-           
-            SecretWord.UsedLetters = new char[] { 'a', 'b','c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-                'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+
+            SecretWord.UsedLetters = new char[] { 'A', 'B','C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+                'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 
             guesses = 5;
 
@@ -116,36 +116,36 @@ namespace Hangman.Web.Controllers
         {
             bool isFound = false;
 
-            char[] letterArray = letter.ToCharArray();
+            //char[] letterArray = letter.ToCharArray();
+            char charLetter = char.Parse(letter);
 
-            for (int i = 0; i < letterArray.Length; i++)
-            {
+
+            
                 for (int k = 0; k < SecretWord.FullWord.Length; k++)
                 {
-                    if (char.ToLower(SecretWord.FullWord[k]) == char.ToLower(letterArray[i]))
+                    if (char.ToLower(SecretWord.FullWord[k]) == char.ToLower(charLetter))
                     {
                         isFound = true;
 
                         if (k == 0)
                         {
-                            SecretWord.PartialWord[k] = char.ToUpper(letterArray[i]);
+                            SecretWord.PartialWord[k] = charLetter;
                         }
                         else
                         {
-                            SecretWord.PartialWord[k] = letterArray[i];
+                            SecretWord.PartialWord[k] = char.ToLower(charLetter);
                         }
                     }
                 }
 
                 for (int j = 0; j < SecretWord.UsedLetters.Length; j++)
                 {
-                    if (char.ToLower(SecretWord.UsedLetters[j]) == char.ToLower(letterArray[i]))
+                    if (SecretWord.UsedLetters[j] == char.ToUpper(charLetter))
                     {
-                        SecretWord.UsedLetters[j] = ' ';
+                        SecretWord.UsedLetters[j] = char.ToLower(charLetter);
                     }
                 }
-            }
-
+            
             if (isFound == false)
             {
                 guesses = guesses - 1;

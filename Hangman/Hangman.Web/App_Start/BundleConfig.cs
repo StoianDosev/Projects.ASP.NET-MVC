@@ -10,7 +10,9 @@ namespace Hangman.Web
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.unobtrusive-ajax.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/hangman").Include(
                         "~/Scripts/hangman.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
