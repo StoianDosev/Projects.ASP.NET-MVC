@@ -1,26 +1,29 @@
 ﻿@model System.Char[]
 
-<h2>Game Over</h2>
-<div class="well" id="gameover">
+<div>
+    <h2 class="header">Game Over</h2>
+    <div class="well" id="gameover">
 
-    <span>
-        The country is:
-    </span>
+        <span>
+            The country is:
+        </span>
 
-    @{
-        if (Model != null)
-        {
-            for (int i = 0; i < Model.Length; i++)
+        @{
+            if (Model != null)
             {
-                <strong>@Model[i]</strong>
+                for (int i = 0; i < Model.Length; i++)
+                {
+                    <strong>@Model[i]</strong>
+                }
             }
         }
-    }
+    </div>
+
+    <div class="alert alert-dismissable" id="gameover">
+        @Html.ActionLink("Play again", "StartGame", "Game", null, new { @class = "btn btn-success" })
+    </div>
 </div>
 
-<div class="alert alert-dismissable" id="gameover">
-    @Html.ActionLink("Play again", "StartGame", "Game", null, new { @class = "btn btn-success" })
-</div>
 
 <script>
     $("#form-wrapper").hide();

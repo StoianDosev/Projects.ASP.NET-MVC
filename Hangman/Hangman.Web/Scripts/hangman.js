@@ -19,8 +19,6 @@
 
             var target = $("#players")
             $(target).replaceWith(data);
-
-
         })
         return false;
     }
@@ -129,7 +127,7 @@ function clearTextBox() {
 }
 
 //Game/StartGame
-var modalFunction= function () {
+var modalFunction = function () {
     function show() {
         $("#theModal").modal("show");
     }
@@ -139,7 +137,6 @@ var modalFunction= function () {
 
 var asyncSendKey = function () {
     function sendKey(e) {
-
         var form = $("#formLetters");
 
         var text = e.currentTarget.textContent;
@@ -161,5 +158,5 @@ var asyncSendKey = function () {
     }
 
     $(".container").on("click", ".key", sendKey);
-}();    
+}();
 
