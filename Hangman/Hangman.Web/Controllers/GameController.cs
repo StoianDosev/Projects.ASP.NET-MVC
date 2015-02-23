@@ -36,7 +36,7 @@ namespace Hangman.Web.Controllers
             SecretWord.UsedLetters = new char[] { 'A', 'B','C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 
-            guesses = 5;
+            guesses = 4;
 
             var country = this.GenerateRandumCountry();
 
